@@ -39,6 +39,7 @@ static  SourceType _sourceType = SourceTypeLaunchImage;
 @property(nonatomic,copy)dispatch_source_t skipTimer;
 @property (nonatomic, assign) BOOL detailPageShowing;
 @property(nonatomic,assign) CGPoint clickPoint;
+@property (nonatomic) int64_t enterBackgroundTimestamp;
 @end
 
 @implementation XHLaunchAd
@@ -170,10 +171,11 @@ static  SourceType _sourceType = SourceTypeLaunchImage;
         XHWeakSelf
         [self setupLaunchAd];
         [[NSNotificationCenter defaultCenter] addObserverForName:UIApplicationWillEnterForegroundNotification object:nil queue:nil usingBlock:^(NSNotification * _Nonnull note) {
-            [self setupLaunchAdEnterForeground];
+            [weakSelf setupLaunchAdEnterForeground];
         }];
         [[NSNotificationCenter defaultCenter] addObserverForName:UIApplicationDidEnterBackgroundNotification object:nil queue:nil usingBlock:^(NSNotification * _Nonnull note) {
-            [self removeOnly];
+            weakSelf.enterBackgroundTimestamp = llround([[NSDate date] timeIntervalSince1970]);
+            [weakSelf removeOnly];
         }];
         [[NSNotificationCenter defaultCenter] addObserverForName:XHLaunchAdDetailPageWillShowNotification object:nil queue:nil usingBlock:^(NSNotification * _Nonnull note) {
             weakSelf.detailPageShowing = YES;
@@ -185,16 +187,28 @@ static  SourceType _sourceType = SourceTypeLaunchImage;
     return self;
 }
 
+- (BOOL)isValidHotLaunch {
+    if (_imageAdConfiguration.hotLaunchInterval > 0) {
+        int64_t currentTimestamp = llround([[NSDate date] timeIntervalSince1970]);
+        int64_t timeInterval = currentTimestamp - self.enterBackgroundTimestamp;
+        return timeInterval >= _imageAdConfiguration.hotLaunchInterval;
+    } else {
+        return YES;
+    }
+}
+
 -(void)setupLaunchAdEnterForeground{
     switch (_launchAdType) {
         case XHLaunchAdTypeImage:{
             if(!_imageAdConfiguration.showEnterForeground || _detailPageShowing) return;
+            if ([self isValidHotLaunch]) {/*next*/} else { return; }
             [self setupLaunchAd];
             [self setupImageAdForConfiguration:_imageAdConfiguration];
         }
             break;
         case XHLaunchAdTypeVideo:{
             if(!_videoAdConfiguration.showEnterForeground || _detailPageShowing) return;
+            if ([self isValidHotLaunch]) {/*next*/} else { return; }
             [self setupLaunchAd];
             [self setupVideoAdForConfiguration:_videoAdConfiguration];
         }
@@ -212,7 +226,11 @@ static  SourceType _sourceType = SourceTypeLaunchImage;
     window.windowLevel = UIWindowLevelStatusBar + 1;
     window.hidden = NO;
     window.alpha = 1;
+    if (@available(iOS 13.0, *)) {
+        window.overrideUserInterfaceStyle = UIUserInterfaceStyleLight;
+    }
     _window = window;
+    [_window layoutIfNeeded];
     /** 添加launchImageView */
     [_window addSubview:[[XHLaunchImageView alloc] initWithSourceType:_sourceType]];
 }
@@ -308,6 +326,13 @@ static  SourceType _sourceType = SourceTypeLaunchImage;
         if(_skipButton == nil){
             _skipButton = [[XHLaunchAdButton alloc] initWithSkipType:configuration.skipButtonType];
             _skipButton.hidden = YES;
+            CGRect theFrame = _skipButton.frame;
+            if (@available(iOS 11.0, *)) {
+                theFrame.origin.y = MAX(_window.safeAreaInsets.top, 20);
+            } else {
+                theFrame.origin.y = 20;
+            }
+            _skipButton.frame = theFrame;
             [_skipButton addTarget:self action:@selector(skipButtonClick:) forControlEvents:UIControlEventTouchUpInside];
         }
         [_window addSubview:_skipButton];
@@ -527,7 +552,7 @@ static  SourceType _sourceType = SourceTypeLaunchImage;
                 [self.delegate xhLaunchAd:self customSkipView:configuration.customSkipView duration:duration];
             }
             if(!configuration.customSkipView){
-                [_skipButton setTitleWithSkipType:configuration.skipButtonType duration:duration];
+                [_skipButton setTitleWithSkipType:configuration.skipButtonType duration:MAX(duration, 1)];
             }
             if(duration==0){
                 DISPATCH_SOURCE_CANCEL_SAFE(_skipTimer);

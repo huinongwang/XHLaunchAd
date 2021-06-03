@@ -37,6 +37,8 @@
     configuration.skipButtonType = SkipTypeTimeText;
     //后台返回时,是否显示广告
     configuration.showEnterForeground = NO;
+    //程序从后台进入前台,展示广告最小间隔
+    configuration.hotLaunchInterval = 30;
     return configuration;
 }
 
@@ -63,6 +65,8 @@
     configuration.skipButtonType = SkipTypeTimeText;
     //后台返回时,是否显示广告
     configuration.showEnterForeground = NO;
+    //程序从后台进入前台,展示广告最小间隔
+    configuration.hotLaunchInterval = 30;
     //是否静音播放
     configuration.muted = NO;
     return configuration;

@@ -37,7 +37,7 @@
         
         _skipType = skipType;
         CGFloat y = XH_FULLSCREEN ? 44 : 20;
-        self.frame = CGRectMake(XH_ScreenW-80,y, 70, 35);//方形
+        self.frame = CGRectMake(XH_ScreenW-90,y, 80, 44);//方形
         switch (skipType) {
             case SkipTypeRoundTime:
             case SkipTypeRoundText:
@@ -58,19 +58,20 @@
             case SkipTypeTime:{
                 [self addSubview:self.timeLab];
                 self.leftRightSpace = 5;
-                self.topBottomSpace = 2.5;
+                self.topBottomSpace = 7;
             }
                 break;
             case SkipTypeText:{
                 [self addSubview:self.timeLab];
                 self.leftRightSpace = 5;
-                self.topBottomSpace = 2.5;
+                self.topBottomSpace = 7;
             }
                 break;
+            case SkipTypeTextTime:
             case SkipTypeTimeText:{
                 [self addSubview:self.timeLab];
                 self.leftRightSpace = 5;
-                self.topBottomSpace = 2.5;
+                self.topBottomSpace = 7;
             }
                 break;
             case SkipTypeRoundTime:{
@@ -105,7 +106,7 @@
         _timeLab.backgroundColor = BackgroundColor;
         _timeLab.layer.masksToBounds = YES;
         _timeLab.textAlignment = NSTextAlignmentCenter;
-        _timeLab.font = [UIFont systemFontOfSize:13.5];
+        _timeLab.font = [UIFont systemFontOfSize:14];
         [self cornerRadiusWithView:_timeLab];
     }
     return _timeLab;
@@ -146,6 +147,11 @@
         case SkipTypeTimeText:{
             self.hidden = NO;
             self.timeLab.text = [NSString stringWithFormat:@"%ld %@",duration,SkipTitle];
+        }
+            break;
+        case SkipTypeTextTime:{
+            self.hidden = NO;
+            self.timeLab.text = [NSString stringWithFormat:@"%@ %ld",SkipTitle,duration];
         }
             break;
         case SkipTypeRoundTime:{

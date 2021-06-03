@@ -17,6 +17,7 @@ typedef NS_ENUM(NSInteger,SkipType) {
     SkipTypeTime      = 2,//方形:倒计时
     SkipTypeText      = 3,//方形:跳过
     SkipTypeTimeText  = 4,//方形:倒计时+跳过 (default)
+    SkipTypeTextTime  = 100,//方形:跳过+倒计时
     /** 圆形 */
     SkipTypeRoundTime = 5,//圆形:倒计时
     SkipTypeRoundText = 6,//圆形:跳过

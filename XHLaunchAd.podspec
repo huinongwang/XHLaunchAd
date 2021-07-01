@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = 'XHLaunchAd'
-  s.version      = '3.9.12.1'
+  s.version      = '3.9.12.2'
   s.summary      = 'XHLaunchAd 修正版.'
   s.homepage     = 'https://github.com/huinongwang/XHLaunchAd'
   s.license      = 'MIT'

@@ -165,6 +165,11 @@ NS_ASSUME_NONNULL_BEGIN
  */
 +(XHLaunchAd *)videoAdWithVideoAdConfiguration:(XHLaunchVideoAdConfiguration *)videoAdconfiguration delegate:(nullable id)delegate;
 
+/**
+ 如果可能，显示一次启动广告
+ */
++ (void)showLaunchAdOnceIfPossible;
+
 #pragma mark -批量下载并缓存
 /**
  *  批量下载并缓存image(异步) - 已缓存的image不会再次下载缓存

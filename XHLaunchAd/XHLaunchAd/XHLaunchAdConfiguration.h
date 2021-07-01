@@ -56,11 +56,6 @@ typedef NS_ENUM(NSInteger , ShowFinishAnimate) {
 /** 程序从后台恢复时,是否需要展示广告(defailt NO) */
 @property (nonatomic,assign) BOOL showEnterForeground;
 
-/** 程序从后台恢复时,展示广告最小间隔,单位秒 (default 30)
- @discussion 当 showEnterForeground == YES 时才会失效
- */
-@property (nonatomic,assign) NSInteger hotLaunchInterval;
-
 /** 点击打开页面地址(请使用openModel,点击事件代理方法请对应使用xhLaunchAd:clickAndOpenModel:clickPoint:) */
 @property(nonatomic,copy)NSString *openURLString XHLaunchAdDeprecated("请使用openModel,点击事件代理方法请对应使用xhLaunchAd:clickAndOpenModel:clickPoint:");
 

@@ -39,7 +39,6 @@ static  SourceType _sourceType = SourceTypeLaunchImage;
 @property(nonatomic,copy)dispatch_source_t skipTimer;
 @property (nonatomic, assign) BOOL detailPageShowing;
 @property(nonatomic,assign) CGPoint clickPoint;
-@property (nonatomic) int64_t enterBackgroundTimestamp;
 @end
 
 @implementation XHLaunchAd
@@ -70,6 +69,12 @@ static  SourceType _sourceType = SourceTypeLaunchImage;
     if(delegate) launchAd.delegate = delegate;
     launchAd.videoAdConfiguration = videoAdconfiguration;
     return launchAd;
+}
+
++ (void)showLaunchAdOnceIfPossible {
+    XHLaunchAd *launchAd = [XHLaunchAd shareLaunchAd];
+    if (launchAd.window) { return; }
+    [launchAd showLaunchAdImmediately];
 }
 
 +(void)downLoadImageAndCacheWithURLArray:(NSArray <NSURL *> * )urlArray{
@@ -174,7 +179,6 @@ static  SourceType _sourceType = SourceTypeLaunchImage;
             [weakSelf setupLaunchAdEnterForeground];
         }];
         [[NSNotificationCenter defaultCenter] addObserverForName:UIApplicationDidEnterBackgroundNotification object:nil queue:nil usingBlock:^(NSNotification * _Nonnull note) {
-            weakSelf.enterBackgroundTimestamp = llround([[NSDate date] timeIntervalSince1970]);
             [weakSelf removeOnly];
         }];
         [[NSNotificationCenter defaultCenter] addObserverForName:XHLaunchAdDetailPageWillShowNotification object:nil queue:nil usingBlock:^(NSNotification * _Nonnull note) {
@@ -187,28 +191,19 @@ static  SourceType _sourceType = SourceTypeLaunchImage;
     return self;
 }
 
-- (BOOL)isValidHotLaunch {
-    if (_imageAdConfiguration.hotLaunchInterval > 0) {
-        int64_t currentTimestamp = llround([[NSDate date] timeIntervalSince1970]);
-        int64_t timeInterval = currentTimestamp - self.enterBackgroundTimestamp;
-        return timeInterval >= _imageAdConfiguration.hotLaunchInterval;
-    } else {
-        return YES;
-    }
+-(void)setupLaunchAdEnterForeground{
+    if (!_imageAdConfiguration.showEnterForeground || _detailPageShowing) { return; }
+    [self showLaunchAdImmediately];
 }
 
--(void)setupLaunchAdEnterForeground{
+- (void)showLaunchAdImmediately {
     switch (_launchAdType) {
         case XHLaunchAdTypeImage:{
-            if(!_imageAdConfiguration.showEnterForeground || _detailPageShowing) return;
-            if ([self isValidHotLaunch]) {/*next*/} else { return; }
             [self setupLaunchAd];
             [self setupImageAdForConfiguration:_imageAdConfiguration];
         }
             break;
         case XHLaunchAdTypeVideo:{
-            if(!_videoAdConfiguration.showEnterForeground || _detailPageShowing) return;
-            if ([self isValidHotLaunch]) {/*next*/} else { return; }
             [self setupLaunchAd];
             [self setupVideoAdForConfiguration:_videoAdConfiguration];
         }

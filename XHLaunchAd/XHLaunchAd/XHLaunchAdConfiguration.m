@@ -65,6 +65,8 @@
     configuration.showEnterForeground = NO;
     //是否静音播放
     configuration.muted = NO;
+    //是否支持画中画播放
+    configuration.allowsPictureInPicturePlayback = NO;
     return configuration;
 }
 @end

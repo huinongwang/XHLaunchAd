@@ -40,6 +40,7 @@
 @property (nonatomic, assign) AVLayerVideoGravity videoGravity;
 @property (nonatomic, assign) BOOL videoCycleOnce;
 @property (nonatomic, assign) BOOL muted;
+@property (nonatomic, assign) BOOL allowsPictureInPicturePlayback;
 @property (nonatomic, strong) NSURL *contentURL;
 
 -(void)stopVideoPlayer;

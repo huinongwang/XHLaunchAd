@@ -107,6 +107,9 @@ typedef NS_ENUM(NSInteger , ShowFinishAnimate) {
 /** 是否关闭音频(default NO) */
 @property (nonatomic, assign) BOOL muted;
 
+/** 是否支持画中画播放，默认值 NO */
+@property (nonatomic, assign) BOOL allowsPictureInPicturePlayback;
+
 +(XHLaunchVideoAdConfiguration *)defaultConfiguration;
 
 @end

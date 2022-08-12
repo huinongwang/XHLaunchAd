@@ -351,6 +351,7 @@ static  SourceType _sourceType = SourceTypeLaunchImage;
 #pragma clang diagnostic pop
     if(configuration.videoGravity) _adVideoView.videoGravity = configuration.videoGravity;
     _adVideoView.videoCycleOnce = configuration.videoCycleOnce;
+    _adVideoView.allowsPictureInPicturePlayback = configuration.allowsPictureInPicturePlayback;
     if(configuration.videoCycleOnce){
         [[NSNotificationCenter defaultCenter] addObserverForName:AVPlayerItemDidPlayToEndTimeNotification object:nil queue:nil usingBlock:^(NSNotification * _Nonnull note) {
             XHLaunchAdLog(@"video不循环,播放完成");

@@ -107,6 +107,7 @@ static NSString *const VideoPlayStatus = @"status";
         _videoPlayer = [[AVPlayerViewController alloc] init];
         _videoPlayer.showsPlaybackControls = NO;
         _videoPlayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
+        _videoPlayer.allowsPictureInPicturePlayback = NO;
         _videoPlayer.view.frame = [UIScreen mainScreen].bounds;
         _videoPlayer.view.backgroundColor = [UIColor clearColor];
         //注册通知控制是否循环播放
@@ -133,15 +134,23 @@ static NSString *const VideoPlayStatus = @"status";
     // 监听播放失败状态
     [self.playerItem addObserver:self forKeyPath:VideoPlayStatus options:NSKeyValueObservingOptionNew context:nil];
 }
--(void)setVideoGravity:(AVLayerVideoGravity)videoGravity{
+
+-(void)setVideoGravity:(AVLayerVideoGravity)videoGravity {
     _videoGravity = videoGravity;
     _videoPlayer.videoGravity = videoGravity;
 }
--(void)setMuted:(BOOL)muted{
+
+-(void)setMuted:(BOOL)muted {
     _muted = muted;
     _videoPlayer.player.muted = muted;
 }
--(void)setVideoScalingMode:(MPMovieScalingMode)videoScalingMode{
+
+- (void)setAllowsPictureInPicturePlayback:(BOOL)allowsPictureInPicturePlayback {
+    _allowsPictureInPicturePlayback = allowsPictureInPicturePlayback;
+    _videoPlayer.allowsPictureInPicturePlayback = allowsPictureInPicturePlayback;
+}
+
+-(void)setVideoScalingMode:(MPMovieScalingMode)videoScalingMode {
     _videoScalingMode = videoScalingMode;
     switch (_videoScalingMode) {
         case MPMovieScalingModeNone:{

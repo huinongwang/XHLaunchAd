@@ -26,7 +26,7 @@ typedef void(^XHLaunchAdBatchDownLoadAndCacheCompletedBlock) (NSArray * _Nonnull
 @end
 
 @interface XHLaunchAdDownload : NSObject
-@property (assign, nonatomic ,nonnull)id<XHLaunchAdDownloadDelegate> delegate;
+@property (nullable, nonatomic, weak) id<XHLaunchAdDownloadDelegate> delegate;
 @end
 
 @interface XHLaunchAdImageDownload : XHLaunchAdDownload

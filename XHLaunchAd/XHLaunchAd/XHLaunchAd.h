@@ -111,7 +111,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface XHLaunchAd : NSObject
 
-@property(nonatomic,assign) id<XHLaunchAdDelegate> delegate;
+@property (nonatomic, weak) id<XHLaunchAdDelegate> delegate;
 
 /**
  设置你工程的启动页使用的是LaunchImage还是LaunchScreen(default:SourceTypeLaunchImage)
@@ -209,6 +209,9 @@ NS_ASSUME_NONNULL_BEGIN
  @param animated 是否需要动画
  */
 +(void)removeAndAnimated:(BOOL)animated;
+
+/// 手动移除广告，使用默认移除动画
++ (void)removeAndAnimateDefault;
 
 #pragma mark - 是否已缓存
 /**

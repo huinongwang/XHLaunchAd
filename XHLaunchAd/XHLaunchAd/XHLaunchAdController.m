@@ -15,13 +15,15 @@
 
 @implementation XHLaunchAdController
 
--(BOOL)shouldAutorotate{
-    
+- (BOOL)shouldAutorotate{
     return NO;
 }
 
--(BOOL)prefersHomeIndicatorAutoHidden{
-    
+- (UIStatusBarStyle)preferredStatusBarStyle{
+    return UIStatusBarStyleLightContent;
+}
+
+- (BOOL)prefersHomeIndicatorAutoHidden{
     return XHLaunchAdPrefersHomeIndicatorAutoHidden;
 }
 

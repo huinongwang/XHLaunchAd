@@ -305,11 +305,11 @@ static  SourceType _sourceType = SourceTypeLaunchImage;
             XHLaunchAdLog(@"未设置广告图片");
         }
     }
+    /** customView */
+    if (configuration.subViews.count > 0) { [self addSubViews:configuration.subViews]; }
     /** skipButton */
     [self addSkipButtonForConfiguration:configuration];
     [self startSkipDispathTimer];
-    /** customView */
-    if(configuration.subViews.count>0)  [self addSubViews:configuration.subViews];
     XHWeakSelf
     adImageView.click = ^(CGPoint point) {
         [weakSelf clickAndPoint:point];
@@ -420,11 +420,11 @@ static  SourceType _sourceType = SourceTypeLaunchImage;
             XHLaunchAdLog(@"未设置广告视频");
         }
     }
+    /** customView */
+    if (configuration.subViews.count > 0) { [self addSubViews:configuration.subViews]; }
     /** skipButton */
     [self addSkipButtonForConfiguration:configuration];
     [self startSkipDispathTimer];
-    /** customView */
-    if(configuration.subViews.count>0) [self addSubViews:configuration.subViews];
     XHWeakSelf
     _adVideoView.click = ^(CGPoint point) {
         [weakSelf clickAndPoint:point];

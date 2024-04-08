@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = 'XHLaunchAd'
-  s.version      = '3.9.12.6'
+  s.version      = '3.9.12.7'
   s.summary      = 'XHLaunchAd 修正版.'
   s.homepage     = 'https://github.com/huinongwang/XHLaunchAd'
   s.license      = 'MIT'
@@ -10,4 +10,7 @@ Pod::Spec.new do |s|
   s.source_files = 'XHLaunchAd/XHLaunchAd/**/*.{h,m}'
   s.requires_arc = true
   s.dependency 'FLAnimatedImage', '~> 1.0.12'
+  s.resource_bundles = {
+    'XHLaunchAd_Privacy' => ['XHLaunchAd/PrivacyInfo.xcprivacy'],
+  }
 end

@@ -100,6 +100,7 @@
 		609041721FB53C1500E4EBA6 /* XHLaunchAdView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XHLaunchAdView.m; sourceTree = "<group>"; };
 		609041731FB53C1500E4EBA6 /* XHLaunchImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XHLaunchImageView.h; sourceTree = "<group>"; };
 		609041741FB53C1500E4EBA6 /* XHLaunchImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XHLaunchImageView.m; sourceTree = "<group>"; };
+		DBB272D82BC38CC400A74AEE /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -192,6 +193,7 @@
 				4B6CF2281D0E902800F76B47 /* AppDelegate.m */,
 				0C6E81B21EB9763F005F61C1 /* XHLaunchAdManager.h */,
 				0C6E81B31EB9763F005F61C1 /* XHLaunchAdManager.m */,
+				DBB272D82BC38CC400A74AEE /* PrivacyInfo.xcprivacy */,
 				4BF7C6981D6EE13000F1E5BE /* LaunchScreen.storyboard */,
 				4B6CF22A1D0E902800F76B47 /* Assets.xcassets */,
 				4B6CF22F1D0E902800F76B47 /* Info.plist */,
